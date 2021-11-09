@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Reto3Grupo.Reto3;
+//Clase controladora de la clase Reservaciones donde se instancian los rest para controlar las acciones de la api (POST, GET, PUT Y DELETE)
+//Librerias necesarias para la relaciones, persistencias, inserciones, etc.
 
 import java.util.List;
 import java.util.Optional;
@@ -24,38 +26,44 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author Camilo Andres Silva A.
  */
-@RestController
-@RequestMapping("/api/Reservation")
+@RestController//Anotación de spring para controlar la clase
+@RequestMapping("/api/Reservation")//Anotación para relacionar un metodo con una petición http
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 
+//Declaración de la clase
 public class ControladorReservaciones {
 
-    @Autowired
-    private ServiciosReservaciones servicio;
+    @Autowired//Anotación para la inyección de dependencias
+    private ServiciosReservaciones servicio;//Declaración de la variable proveniente del servicio para su uso
 
-    @GetMapping("/all")
+    //Metodo para la obtención de la lista de reservaciones por medio del servicio
+    @GetMapping("/all")//Anotación para el manejo de los metodos get
     public List<Reservaciones> getReservations() {
         return servicio.getAll();
     }
 
-    @GetMapping("/{id}")
+    //Metodo para la obtención de la lista de reservaciones por el id medio del servicio
+    @GetMapping("/{id}")//Anotación para el manejo de los metodos get
     public Optional<Reservaciones> getReservation(@PathVariable("id") int reservationId) {
         return servicio.getReservation(reservationId);
     }
 
-    @PostMapping("/save")
+    //Metodo para grabar la información de reservaciones por medio del servicio
+    @PostMapping("/save")//Anotación para el manejo de los metodos post
     @ResponseStatus(HttpStatus.CREATED)
     public Reservaciones save(@RequestBody Reservaciones reservation) {
         return servicio.save(reservation);
     }
 
-    @PutMapping("/update")
+    //Metodo para actualizar la información de las reservaciones por medio del servicio
+    @PutMapping("/update")//Anotación para el manejo de los metodos put
     @ResponseStatus(HttpStatus.CREATED)
     public Reservaciones update(@RequestBody Reservaciones reservation) {
         return servicio.update(reservation);
     }
 
-    @DeleteMapping("/{id}")
+    //Metodo para eliminar una reservacion por medio del id y del servicio
+    @DeleteMapping("/{id}")//Anotación para el manejo de los metodos delete
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public boolean delete(@PathVariable("id") int reservationId) {
         return servicio.deleteReservation(reservationId);

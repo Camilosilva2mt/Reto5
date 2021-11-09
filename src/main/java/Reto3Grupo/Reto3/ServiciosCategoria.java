@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Reto3Grupo.Reto3;
+//Clase Servicios Categoria donde se instancian atributos y metodos set and get del crud
+//Librerias necesarias para la relaciones, persistencias, inserciones, etc.
 
 import java.util.List;
 import java.util.Optional;
@@ -13,20 +15,24 @@ import org.springframework.stereotype.Service;
  *
  * @author Camilo Andres Silva A.
  */
-@Service
+@Service//Anotación de los componentes del servicio del framework
+//Clase servicios cliente
 public class ServiciosCategoria {
 
-    @Autowired
-    private RepositorioCategoria metodosCrud;
+    @Autowired//Anotación para la inyección de dependencias
+    private RepositorioCategoria metodosCrud;//Declaración de la variable proveniente del repositorio para su uso
 
+    //Metodo get para la obtención de la lista de categorias con la ayuda del repositorio
     public List<Categoria> getAll() {
         return metodosCrud.getAll();
     }
 
+    //Metodo get para la obtención de la lista de categorias con la ayuda del repositorio por medio del id 
     public Optional<Categoria> getCategoria(int categoriaId) {
         return metodosCrud.getCategoria(categoriaId);
     }
 
+    //Metodo save para grabar los datos que se ingresen para la categoria
     public Categoria save(Categoria categoria) {
         if (categoria.getId() == null) {
             return metodosCrud.save(categoria);
@@ -40,6 +46,7 @@ public class ServiciosCategoria {
         }
     }
 
+    //Metodo update para actualizar los datos que se ingresen para la categoria
     public Categoria update(Categoria categoria) {
         if (categoria.getId() != null) {
             Optional<Categoria> g = metodosCrud.getCategoria(categoria.getId());
@@ -56,6 +63,7 @@ public class ServiciosCategoria {
         return categoria;
     }
 
+    //Metodo delete para eliminar los datos que se ingresen para la categoria
     public boolean deleteCategoria(int categoriaId) {
         Boolean d = getCategoria(categoriaId).map(categoria -> {
             metodosCrud.delete(categoria);

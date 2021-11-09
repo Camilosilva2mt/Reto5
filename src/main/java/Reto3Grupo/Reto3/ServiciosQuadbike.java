@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Reto3Grupo.Reto3;
+//Clase Servicios Cuatrimotos donde se instancian atributos y metodos set and get del crud
+//Librerias necesarias para la relaciones, persistencias, inserciones, etc.
 
 import java.util.List;
 import java.util.Optional;
@@ -13,20 +15,24 @@ import org.springframework.stereotype.Service;
  *
  * @author Camilo Andres Silva A.
  */
-@Service
+@Service//Anotación de los componentes del servicio del framework
+//Clase servicios cuatrimotos
 public class ServiciosQuadbike {
 
-    @Autowired
-    private RepositorioQuadbike metodosCrud;
+    @Autowired//Anotación para la inyección de dependencias
+    private RepositorioQuadbike metodosCrud;//Declaración de la variable proveniente del repositorio para su uso
 
+    //Metodo get para la obtención de la lista de cuatrimotos con la ayuda del repositorio
     public List<Quadbike> getAll() {
         return metodosCrud.getAll();
     }
 
+    //Metodo get para la obtención de la lista de cuatrimotos con la ayuda del repositorio por medio del id     
     public Optional<Quadbike> getQuadbike(int quadbikeId) {
         return metodosCrud.getQuadbike(quadbikeId);
     }
 
+    //Metodo save para grabar los datos que se ingresen para la cuatrimoto    
     public Quadbike save(Quadbike quadbike) {
         if (quadbike.getId() == null) {
             return metodosCrud.save(quadbike);
@@ -40,6 +46,7 @@ public class ServiciosQuadbike {
         }
     }
 
+    //Metodo update para actualizar los datos que se ingresen para la cuatrimoto    
     public Quadbike update(Quadbike quadbike) {
         if (quadbike.getId() != null) {
             Optional<Quadbike> e = metodosCrud.getQuadbike(quadbike.getId());
@@ -64,13 +71,12 @@ public class ServiciosQuadbike {
             } else {
                 return quadbike;
             }
-        }else{
+        } else {
             return quadbike;
         }
     }
 
-    
-
+    //Metodo delete para eliminar los datos que se ingresen para la cuatrimoto    
     public boolean deleteQuadbike(int quadbikeId) {
         Boolean aBoolean = getQuadbike(quadbikeId).map(quadbike -> {
             metodosCrud.delete(quadbike);

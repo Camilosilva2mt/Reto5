@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Reto3Grupo.Reto3;
+//Clase controladora de la clase Categoria donde se instancian los rest para controlar las acciones de la api (POST, GET, PUT Y DELETE)
+//Librerias necesarias para la relaciones, persistencias, inserciones, etc.
 
 import java.util.List;
 import java.util.Optional;
@@ -24,37 +26,45 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author Camilo Andres Silva A.
  */
-@RestController
-@RequestMapping("/api/Category")
+@RestController//Anotación de spring para controlar la clase
+@RequestMapping("/api/Category")//Anotación para relacionar un metodo con una petición http
+//Anotación para el control de los metodos GET, POST, PUT y DELETE de la aplicación
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
+
+//Declaración de la clase
 public class ControladorCategoria {
 
-    @Autowired
-    private ServiciosCategoria servicio;
+    @Autowired//Anotación para la inyección de dependencias
+    private ServiciosCategoria servicio;//Declaración de la variable proveniente del servicio para su uso
 
-    @GetMapping("/all")
+    //Metodo para la obtención de la lista de categorias por medio del servicio
+    @GetMapping("/all")//Anotación para el manejo de los metodos get
     public List<Categoria> getCategoria() {
         return servicio.getAll();
     }
 
-    @GetMapping("/{id}")
+    //Metodo para la obtención de la lista de categorias por el id por medio del servicio
+    @GetMapping("/{id}")//Anotación para el manejo de los metodos get
     public Optional<Categoria> getCategoria(@PathVariable("id") int categoriaId) {
         return servicio.getCategoria(categoriaId);
     }
 
-    @PostMapping("/save")
+    //Metodo para grabar la información de categoria por medio del servicio
+    @PostMapping("/save")//Anotación para el manejo de los metodos post
     @ResponseStatus(HttpStatus.CREATED)
     public Categoria save(@RequestBody Categoria categoria) {
         return servicio.save(categoria);
     }
 
-    @PutMapping("/update")
+    //Metodo para actualizar la información de categoria por medio del servicio
+    @PutMapping("/update")//Anotación para el manejo de los metodos put
     @ResponseStatus(HttpStatus.CREATED)
     public Categoria update(@RequestBody Categoria categoria) {
         return servicio.update(categoria);
     }
 
-    @DeleteMapping("/{id}")
+    //Metodo para eliminar una categoria por medio del id y del servicio
+    @DeleteMapping("/{id}")//Anotación para el manejo de los metodos delete
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public boolean delete(@PathVariable("id") int categoriaId) {
         return servicio.deleteCategoria(categoriaId);

@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Reto3Grupo.Reto3;
+//Clase Servicios Cliente donde se instancian atributos y metodos set and get del crud
+//Librerias necesarias para la relaciones, persistencias, inserciones, etc.
 
 import java.util.List;
 import java.util.Optional;
@@ -13,19 +15,24 @@ import org.springframework.stereotype.Service;
  *
  * @author Camilo Andres Silva A.
  */
-@Service
+@Service//Anotación de los componentes del servicio del framework
+//Clase servicios cliente
 public class ServiciosCliente {
-    @Autowired
-    private RepositorioCliente metodosCrud;
 
+    @Autowired//Anotación para la inyección de dependencias
+    private RepositorioCliente metodosCrud;//Declaración de la variable proveniente del repositorio para su uso
+
+    //Metodo get para la obtención de la lista de clientes con la ayuda del repositorio
     public List<Cliente> getAll() {
         return metodosCrud.getAll();
     }
 
+    //Metodo get para la obtención de la lista de clientes con la ayuda del repositorio por medio del id 
     public Optional<Cliente> getClient(int clientId) {
         return metodosCrud.getCliente(clientId);
     }
 
+    //Metodo save para grabar los datos que se ingresen para el cliente
     public Cliente save(Cliente client) {
         if (client.getIdClient() == null) {
             return metodosCrud.save(client);
@@ -39,10 +46,14 @@ public class ServiciosCliente {
         }
     }
 
-        public Cliente update(Cliente client) {
+    //Metodo update para actualizar los datos que se ingresen para el cliente
+    public Cliente update(Cliente client) {
         if (client.getIdClient() != null) {
             Optional<Cliente> e = metodosCrud.getCliente(client.getIdClient());
             if (!e.isEmpty()) {
+                if (client.getEmail() != null) {
+                    e.get().setEmail(client.getEmail());
+                }
                 if (client.getName() != null) {
                     e.get().setName(client.getName());
                 }
@@ -57,11 +68,12 @@ public class ServiciosCliente {
             } else {
                 return client;
             }
-        }else{
+        } else {
             return client;
         }
     }
 
+    //Metodo delete para eliminar los datos que se ingresen para el cliente
     public boolean deleteCliente(int clienteId) {
         Boolean aBoolean = getClient(clienteId).map(client -> {
             metodosCrud.delete(client);

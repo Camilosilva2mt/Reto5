@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Reto3Grupo.Reto3;
+//Clase Servicios Reservaciones donde se instancian atributos y metodos set and get del crud
+//Librerias necesarias para la relaciones, persistencias, inserciones, etc.
 
 import java.util.List;
 import java.util.Optional;
@@ -13,20 +15,24 @@ import org.springframework.stereotype.Service;
  *
  * @author Camilo Andres Silva A.
  */
-@Service
+@Service//Anotación de los componentes del servicio del framework
+//Clase servicios reservaciones
 public class ServiciosReservaciones {
 
-    @Autowired
-    private RepositorioReservaciones metodosCrud;
+    @Autowired//Anotación para la inyección de dependencias
+    private RepositorioReservaciones metodosCrud;//Declaración de la variable proveniente del repositorio para su uso
 
+    //Metodo get para la obtención de la lista de reservaciones con la ayuda del repositorio
     public List<Reservaciones> getAll() {
         return metodosCrud.getAll();
     }
 
+    //Metodo get para la obtención de la lista de reservaciones con la ayuda del repositorio por medio del id 
     public Optional<Reservaciones> getReservation(int reservationId) {
         return metodosCrud.getReservation(reservationId);
     }
 
+    //Metodo save para grabar los datos que se ingresen para la reservación
     public Reservaciones save(Reservaciones reservation) {
         if (reservation.getIdReservation() == null) {
             return metodosCrud.save(reservation);
@@ -40,6 +46,7 @@ public class ServiciosReservaciones {
         }
     }
 
+    //Metodo update para actualizar los datos que se ingresen para la reservación
     public Reservaciones update(Reservaciones reservation) {
         if (reservation.getIdReservation() != null) {
             Optional<Reservaciones> e = metodosCrud.getReservation(reservation.getIdReservation());
@@ -63,6 +70,7 @@ public class ServiciosReservaciones {
         }
     }
 
+    //Metodo delete para eliminar los datos que se ingresen para la reservación    
     public boolean deleteReservation(int reservationId) {
         Boolean aBoolean = getReservation(reservationId).map(reservation -> {
             metodosCrud.delete(reservation);
